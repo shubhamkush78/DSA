@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+int x[] = {67, 34, 19, 82, 27, 41, 51, 9999};
+
+int partition(int start, int end) {
+    int i = start, j = end;
+    int pivot = x[start], tmp;
+
+    while(i < j) {
+        do {
+            i++;
+        } while(x[i] <= pivot);
+
+        do {
+            j--;
+        } while(x[j] > pivot);
+
+        if(i < j) {
+            tmp = x[i];
+            x[i] = x[j];
+            x[j] = tmp;
+        }
+    }
+
+    tmp = x[start];
+    x[start] = x[j];
+    x[j] = tmp;
+
+    return j;
+}
+
+void quick_sort(int start, int end) {
+    int n;
+
+    if(start < end) {
+        n = partition(start, end);
+        quick_sort(start, n);
+        quick_sort(n+1, end);
+    }
+}
+
+int main() {
+    int i;
+    int size = sizeof(x) / sizeof(int);
+
+    quick_sort(0, size-1);
+
+    for(i = 0; i< size-1; i++)
+        printf("%d ", x[i]); 
+
+    return 0;
+}
